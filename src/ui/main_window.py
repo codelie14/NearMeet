@@ -5,15 +5,20 @@ from PyQt6.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QTextEdit, QPushButton, QListWidget, QListWidgetItem,
     QLabel, QLineEdit, QSplitter, QStatusBar, QMenuBar,
-    QMenu, QMessageBox, QDialog
+    QMenu, QMessageBox, QDialog, QFrame, QScrollArea
 )
 from PyQt6.QtCore import Qt, pyqtSignal, QThread, QTimer
-from PyQt6.QtGui import QIcon, QPixmap, QFont
+from PyQt6.QtGui import QIcon, QPixmap, QFont, QColor
 
 from src.config import UIConfig, AppConfig
 from src.chat.manager import ChatManager
 from src.chat.message import Message
 from src.utils.logger import get_logger
+from src.ui.styles import get_stylesheet
+from src.ui.widgets import (
+    MessageBubble, UserItem, RoundedButton, ChatHeaderFrame,
+    StatusBadge, SeparatorLine
+)
 
 logger = get_logger(__name__)
 
@@ -35,6 +40,9 @@ class MainWindow(QMainWindow):
         self.setGeometry(100, 100, UIConfig.WINDOW_WIDTH, UIConfig.WINDOW_HEIGHT)
         self.setMinimumSize(UIConfig.WINDOW_MIN_WIDTH, UIConfig.WINDOW_MIN_HEIGHT)
         
+        # Apply modern stylesheet
+        self.setStyleSheet(get_stylesheet("dark"))
+        
         # Create UI
         self._create_ui()
         self._create_menu()
@@ -47,83 +55,126 @@ class MainWindow(QMainWindow):
         # Central widget
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
+        central_widget.setContentsMargins(0, 0, 0, 0)
         
         # Main layout
         main_layout = QVBoxLayout(central_widget)
+        main_layout.setContentsMargins(0, 0, 0, 0)
+        main_layout.setSpacing(0)
         
-        # Top section - User info
-        top_layout = QHBoxLayout()
+        # Header with modern design
+        self.header = ChatHeaderFrame(f"NearMeet ({self.mode.capitalize()})", "Ready to chat")
+        main_layout.addWidget(self.header)
+        
+        # Separator
+        main_layout.addWidget(SeparatorLine())
+        
+        # Top section - User info with custom button
+        top_frame = QFrame()
+        top_frame.setContentsMargins(12, 12, 12, 12)
+        top_layout = QHBoxLayout(top_frame)
+        top_layout.setSpacing(8)
         
         user_label = QLabel("Username:")
+        user_label.setMinimumWidth(80)
         self.username_input = QLineEdit()
         self.username_input.setPlaceholderText("Enter your username")
         self.username_input.setMaximumWidth(200)
         
+        self.connect_btn = RoundedButton("Connect", style="primary")
+        self.disconnect_btn = RoundedButton("Disconnect", style="danger")
+        self.disconnect_btn.setEnabled(False)
+        
         top_layout.addWidget(user_label)
         top_layout.addWidget(self.username_input)
+        top_layout.addWidget(self.connect_btn)
+        top_layout.addWidget(self.disconnect_btn)
         top_layout.addStretch()
         
-        main_layout.addLayout(top_layout)
+        main_layout.addWidget(top_frame)
+        main_layout.addWidget(SeparatorLine())
         
         # Content section - Chat and users
         content_layout = QHBoxLayout()
+        content_layout.setSpacing(0)
+        content_layout.setContentsMargins(0, 0, 0, 0)
         
         # Left side - User list
-        left_layout = QVBoxLayout()
-        left_label = QLabel("Users Online")
-        left_label.setFont(QFont("Arial", 10, QFont.Weight.Bold))
+        left_frame = QFrame()
+        left_frame.setMaximumWidth(250)
+        left_layout = QVBoxLayout(left_frame)
+        left_layout.setContentsMargins(12, 12, 6, 12)
+        left_layout.setSpacing(8)
+        
+        left_label = QLabel("Online Users")
+        left_label.setFont(QFont("Arial", 11, QFont.Weight.Bold))
+        left_label.setMinimumHeight(24)
         left_layout.addWidget(left_label)
         
         self.users_list = QListWidget()
-        self.users_list.setMaximumWidth(200)
+        self.users_list.setSpacing(4)
         left_layout.addWidget(self.users_list)
         
-        content_layout.addLayout(left_layout)
+        self.status_badge = StatusBadge("Offline", "error")
+        left_layout.addWidget(self.status_badge)
+        
+        content_layout.addWidget(left_frame)
+        
+        # Vertical separator
+        content_layout.addWidget(SeparatorLine("#404040"))
         
         # Middle/Right side - Chat area
-        chat_layout = QVBoxLayout()
+        chat_frame = QFrame()
+        chat_layout = QVBoxLayout(chat_frame)
+        chat_layout.setContentsMargins(12, 12, 12, 12)
+        chat_layout.setSpacing(8)
         
         # Chat display
         chat_label = QLabel("Messages")
-        chat_label.setFont(QFont("Arial", 10, QFont.Weight.Bold))
+        chat_label.setFont(QFont("Arial", 11, QFont.Weight.Bold))
+        chat_label.setMinimumHeight(24)
         chat_layout.addWidget(chat_label)
         
-        self.chat_display = QTextEdit()
-        self.chat_display.setReadOnly(True)
-        self.chat_display.setFont(QFont("Courier", 9))
-        chat_layout.addWidget(self.chat_display)
+        # Scroll area for messages
+        scroll_area = QScrollArea()
+        scroll_area.setWidgetResizable(True)
+        scroll_widget = QWidget()
+        scroll_layout = QVBoxLayout(scroll_widget)
+        scroll_layout.setSpacing(8)
+        scroll_layout.addStretch()
         
-        # Message input
+        self.messages_container = scroll_widget
+        self.messages_layout = scroll_layout
+        scroll_area.setWidget(scroll_widget)
+        
+        chat_layout.addWidget(scroll_area)
+        
+        # Input area
+        input_frame = QFrame()
+        input_layout = QHBoxLayout(input_frame)
+        input_layout.setSpacing(8)
+        input_layout.setContentsMargins(0, 0, 0, 0)
+        
         self.message_input = QLineEdit()
-        self.message_input.setPlaceholderText("Type a message and press Enter...")
-        self.message_input.returnPressed.connect(self._send_message)
-        chat_layout.addWidget(self.message_input)
+        self.message_input.setPlaceholderText("Type your message here...")
+        self.message_input.setMinimumHeight(36)
         
-        # Buttons layout
-        buttons_layout = QHBoxLayout()
+        self.send_btn = RoundedButton("Send", style="success")
+        self.send_btn.setMaximumWidth(100)
         
-        self.send_button = QPushButton("Send")
-        self.send_button.clicked.connect(self._send_message)
+        input_layout.addWidget(self.message_input)
+        input_layout.addWidget(self.send_btn)
         
-        self.call_button = QPushButton("Call")
-        self.call_button.clicked.connect(self._initiate_call)
+        chat_layout.addWidget(input_frame)
         
-        self.share_screen_button = QPushButton("Share Screen")
-        self.share_screen_button.clicked.connect(self._share_screen)
+        content_layout.addWidget(chat_frame)
         
-        self.file_button = QPushButton("Send File")
-        self.file_button.clicked.connect(self._send_file)
-        
-        buttons_layout.addWidget(self.send_button)
-        buttons_layout.addWidget(self.call_button)
-        buttons_layout.addWidget(self.share_screen_button)
-        buttons_layout.addWidget(self.file_button)
-        
-        chat_layout.addLayout(buttons_layout)
-        
-        content_layout.addLayout(chat_layout)
-        
+        # Add content to main layout
         main_layout.addLayout(content_layout)
+        
+        # Connect button signals
+        self.message_input.returnPressed.connect(self._send_message)
+        self.send_btn.clicked.connect(self._send_message)
     
     def _create_menu(self):
         """Create menu bar"""
@@ -189,9 +240,20 @@ class MainWindow(QMainWindow):
     
     def _display_message(self, message: Message):
         """Display a message in the chat"""
-        timestamp = message.timestamp.strftime("%H:%M:%S")
-        formatted = f"[{timestamp}] {message.sender}: {message.content}\n"
-        self.chat_display.append(formatted)
+        timestamp = message.timestamp.strftime("%H:%M")
+        
+        # Create message bubble
+        bubble = MessageBubble(
+            sender=message.sender,
+            message=message.content,
+            timestamp=timestamp,
+            is_own=(message.sender == self.username_input.text().strip())
+        )
+        
+        # Insert before stretch in messages layout
+        self.messages_layout.insertWidget(
+            self.messages_layout.count() - 1, bubble
+        )
     
     def _initiate_call(self):
         """Initiate a call"""
@@ -231,7 +293,12 @@ class MainWindow(QMainWindow):
         )
         
         if reply == QMessageBox.StandardButton.Yes:
-            self.chat_display.clear()
+            # Clear messages from layout
+            while self.messages_layout.count() > 1:
+                item = self.messages_layout.takeAt(0)
+                if item.widget():
+                    item.widget().deleteLater()
+            
             self.chat_manager.clear_messages()
             self.status.showMessage("Chat cleared")
     
