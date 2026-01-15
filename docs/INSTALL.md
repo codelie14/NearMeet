@@ -26,7 +26,7 @@ pip --version
 #### 1. Cloner le dépôt
 
 ```bash
-git clone https://github.com/yourusername/NearMeet.git
+git clone https://github.com/codelie14/NearMeet.git
 cd NearMeet
 ```
 
@@ -72,7 +72,7 @@ python -m src --mode server --port 5000
 #### 1. Cloner le dépôt
 
 ```bash
-git clone https://github.com/yourusername/NearMeet.git
+git clone https://github.com/codelie14/NearMeet.git
 cd NearMeet
 ```
 
@@ -113,7 +113,7 @@ python -m src
 #### 1. Cloner le dépôt
 
 ```bash
-git clone https://github.com/yourusername/NearMeet.git
+git clone https://github.com/codelie14/NearMeet.git
 cd NearMeet
 ```
 

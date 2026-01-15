@@ -59,7 +59,7 @@
 1. **Clonez le dépôt**
 
 ```bash
-git clone https://github.com/yourusername/NearMeet.git
+git clone https://github.com/codelie14/NearMeet.git
 cd NearMeet
 ```
 

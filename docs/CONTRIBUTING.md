@@ -38,7 +38,7 @@ Créez une issue avec:
 1. **Fork le dépôt**
 
 ```bash
-git clone https://github.com/yourusername/NearMeet.git
+git clone https://github.com/codelie14/NearMeet.git
 cd NearMeet
 ```
 
@@ -212,7 +212,7 @@ Avant de soumettre:
 
 ```bash
 # Clone le dépôt
-git clone https://github.com/yourusername/NearMeet.git
+git clone https://github.com/codelie14/NearMeet.git
 cd NearMeet
 
 # Créer un environnement virtuel
