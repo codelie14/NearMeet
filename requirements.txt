@@ -1,52 +1,54 @@
 # Core Dependencies
-PyQt6==6.7.0
-PyQt6-sip==13.6.0
+PyQt6
+PyQt6-sip
 
 # Network Communication
 # TCP/IP and UDP are built-in with Python's socket module
 
 # Audio Processing
-pyaudio==0.2.13
-sounddevice==0.4.6
-numpy==1.24.3
+# Note: Using pre-built wheels for Windows compatibility
+sounddevice
+pyaudio
+numpy
+soundfile
 
 # Video Processing
-opencv-python==4.8.1.78
-opencv-contrib-python==4.8.1.78
+opencv-python
+opencv-contrib-python
 
 # Screen Sharing
-mss==9.0.1
-Pillow==10.1.0
+mss
+Pillow
 
 # Database
 # sqlite3 is built-in with Python
 
 # Encryption & Security
-cryptography==41.0.7
-PyNaCl==1.5.0
+cryptography
+PyNaCl
 
 # System Notifications
-plyer==2.1.0
+plyer
 
 # Utilities
-python-dotenv==1.0.0
-requests==2.31.0
-pydantic==2.5.0
+python-dotenv
+requests
+pydantic
 
 # Logging
-colorlog==6.8.0
+colorlog
 
 # Testing
-pytest==7.4.3
-pytest-cov==4.1.0
-pytest-asyncio==0.21.1
+pytest
+pytest-cov
+pytest-asyncio
 
 # Code Quality
-black==23.12.0
-flake8==6.1.0
-isort==5.13.2
-mypy==1.7.1
+black
+flake8
+isort
+mypy
 
 # Documentation
-Sphinx==7.2.6
-sphinx-rtd-theme==2.0.0
+Sphinx
+sphinx-rtd-theme
