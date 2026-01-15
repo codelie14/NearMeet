@@ -1,11 +1,11 @@
 """Security and encryption module for NearMeet"""
 
 import os
+import base64
+import hashlib
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2
 from cryptography.hazmat.backends import default_backend
-import base64
 
 from src.utils.logger import get_logger
 
@@ -22,19 +22,20 @@ class Encryption:
     
     @staticmethod
     def derive_key(password: str, salt: bytes = None) -> tuple[str, str]:
-        """Derive encryption key from password"""
+        """Derive encryption key from password using PBKDF2"""
         if salt is None:
             salt = os.urandom(16)
         
-        kdf = PBKDF2(
-            algorithm=hashes.SHA256(),
-            length=32,
-            salt=salt,
-            iterations=100000,
-            backend=default_backend()
+        # Use hashlib for PBKDF2 (more compatible)
+        derived_key = hashlib.pbkdf2_hmac(
+            'sha256',
+            password.encode(),
+            salt,
+            100000,
+            dklen=32
         )
         
-        key = base64.urlsafe_b64encode(kdf.derive(password.encode()))
+        key = base64.urlsafe_b64encode(derived_key)
         return key.decode(), base64.b64encode(salt).decode()
     
     @staticmethod

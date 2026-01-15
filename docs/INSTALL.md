@@ -289,7 +289,7 @@ rm -rf NearMeet
 Si vous rencontrez des problèmes:
 
 1. Consultez la [documentation](../docs/README.md)
-2. Créez une [issue sur GitHub](https://github.com/yourusername/NearMeet/issues)
+2. Créez une [issue sur GitHub](https://github.com/codelie14/NearMeet/issues)
 3. Vérifiez les [FAQ](FAQ.md)
 
 ---

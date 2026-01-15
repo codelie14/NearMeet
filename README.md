@@ -284,13 +284,13 @@ Ce projet est sous licence MIT. Consultez le fichier [LICENSE](LICENSE) pour plu
 
 ## 🐛 Signaler un bug
 
-Avez-vous trouvé un bug ? Veuillez créer une [issue](https://github.com/yourusername/NearMeet/issues) avec une description détaillée.
+Avez-vous trouvé un bug ? Veuillez créer une [issue](https://github.com/codelie14/NearMeet/issues) avec une description détaillée.
 
 ## 💬 Support
 
 Pour toute question ou support, veuillez :
 
-- Créer une [issue](https://github.com/yourusername/NearMeet/issues)
+- Créer une [issue](https://github.com/codelie14/NearMeet/issues)
 - Consulter la [documentation](docs/)
 - Nous contacter via email
 

@@ -110,7 +110,7 @@ class Protocol:
             payload = message
         
         header = struct.pack(
-            '>4sBI4s7s',
+            '>4sBII7s',
             MAGIC_NUMBER,
             PROTOCOL_VERSION,
             message_id,
@@ -135,7 +135,7 @@ class Protocol:
         payload = data[MESSAGE_HEADER_SIZE:]
         
         magic, version, msg_id, size, reserved = struct.unpack(
-            '>4sBI4s7s',
+            '>4sBII7s',
             header
         )
         

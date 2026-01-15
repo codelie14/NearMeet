@@ -101,7 +101,7 @@ ENCRYPTION_ENABLED=False
 **A:** Consultez [CONTRIBUTING.md](docs/CONTRIBUTING.md) pour les directives.
 
 ### Q: Comment signaler un bug?
-**A:** Créez une [issue sur GitHub](https://github.com/yourusername/NearMeet/issues).
+**A:** Créez une [issue sur GitHub](https://github.com/codelie14/NearMeet/issues).
 
 ### Q: Puis-je proposer une fonctionnalité?
 **A:** Oui! Ouvrez une issue avec le tag "enhancement".
@@ -116,9 +116,9 @@ ENCRYPTION_ENABLED=False
 ### Q: Où puis-je obtenir de l'aide?
 **A:**
 1. Consultez la [documentation](docs/)
-2. Créez une [issue](https://github.com/yourusername/NearMeet/issues)
+2. Créez une [issue](https://github.com/codelie14/NearMeet/issues)
 3. Contactez: contact@indralabs.ai
 
 ---
 
-Vous n'avez pas trouvé votre réponse? [Créez une issue!](https://github.com/yourusername/NearMeet/issues)
+Vous n'avez pas trouvé votre réponse? [Créez une issue!](https://github.com/codelie14/NearMeet/issues)

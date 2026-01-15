@@ -6,27 +6,65 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "nearmeet"
 version = "1.0.0"
-description = "A local network communication application"
+description = "A local network communication application with chat, video, and file sharing"
 readme = "README.md"
 requires-python = ">=3.11"
-license = {text = "MIT"}
+license = "MIT"
 authors = [
     {name = "IndraLabs", email = "contact@indralabs.ai"}
 ]
-keywords = ["chat", "video", "local-network", "communication"]
+keywords = ["chat", "video", "local-network", "communication", "file-sharing", "lan"]
 classifiers = [
     "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
     "Intended Audience :: End Users/Desktop",
-    "License :: OSI Approved :: MIT License",
+    "Topic :: Communications :: Chat",
+    "Topic :: Multimedia :: Video",
+    "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "PyQt6>=6.7.0",
+    "sounddevice>=0.4.6",
+    "soundfile>=0.12.1",
+    "numpy>=1.21.0",
+    "opencv-python>=4.8.1.78",
+    "mss>=9.0.1",
+    "Pillow>=10.1.0",
+    "cryptography>=41.0.7",
+    "PyNaCl>=1.5.0",
+    "plyer>=2.1.0",
+    "python-dotenv>=1.0.0",
+    "requests>=2.31.0",
+    "pydantic>=2.5.0",
+    "colorlog>=6.8.0",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.3",
+    "pytest-cov>=4.1.0",
+    "pytest-asyncio>=0.21.1",
+    "black>=23.12.0",
+    "flake8>=6.1.0",
+    "isort>=5.13.2",
+    "mypy>=1.7.1",
+    "sphinx>=7.2.6",
+    "sphinx-rtd-theme>=2.0.0",
+]
+
+[project.scripts]
+nearmeet = "src.__main__:main"
+
 [project.urls]
-Homepage = "https://github.com/yourusername/NearMeet"
-Documentation = "https://github.com/yourusername/NearMeet/tree/main/docs"
-Repository = "https://github.com/yourusername/NearMeet"
-Issues = "https://github.com/yourusername/NearMeet/issues"
+Homepage = "https://github.com/codelie14/NearMeet"
+Documentation = "https://github.com/codelie14/NearMeet/tree/main/docs"
+Repository = "https://github.com/codelie14/NearMeet"
+Issues = "https://github.com/codelie14/NearMeet/issues"
+"Bug Tracker" = "https://github.com/codelie14/NearMeet/issues"
+"Source Code" = "https://github.com/codelie14/NearMeet"
 
 [tool.black]
 line-length = 100

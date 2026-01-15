@@ -32,7 +32,10 @@ class TestEncryption:
         password = "mypassword"
         
         key1, salt1 = Encryption.derive_key(password)
-        key2, salt2 = Encryption.derive_key(password, salt=bytes.fromhex(salt1))
+        # salt1 is base64 encoded, so we need to decode it first
+        import base64
+        salt_bytes = base64.b64decode(salt1)
+        key2, salt2 = Encryption.derive_key(password, salt=salt_bytes)
         
         assert key1 == key2
         assert salt1 == salt2
