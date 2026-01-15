@@ -1,0 +1,73 @@
+{
+  "application": {
+    "name": "NearMeet",
+    "version": "1.0.0",
+    "organization": "IndraLabs",
+    "log_level": "INFO"
+  },
+  "server": {
+    "host": "0.0.0.0",
+    "port": 5000,
+    "max_clients": 100,
+    "debug": false
+  },
+  "client": {
+    "auto_connect": false,
+    "timeout": 30,
+    "reconnect_attempts": 5,
+    "reconnect_interval": 2
+  },
+  "database": {
+    "path": "./data/nearmeet.db",
+    "backup_enabled": true,
+    "backup_interval": 3600,
+    "timeout": 30
+  },
+  "media": {
+    "audio": {
+      "enabled": true,
+      "sample_rate": 44100,
+      "chunk_size": 1024,
+      "channels": 2
+    },
+    "video": {
+      "enabled": true,
+      "width": 640,
+      "height": 480,
+      "fps": 30,
+      "bitrate": 500000
+    },
+    "screen": {
+      "enabled": true,
+      "quality": 80,
+      "fps": 15
+    }
+  },
+  "features": {
+    "notifications": true,
+    "message_search": true,
+    "user_profiles": true,
+    "message_reactions": false,
+    "message_edit": true,
+    "file_sharing": true,
+    "video_calls": true,
+    "audio_calls": true,
+    "screen_sharing": true
+  },
+  "security": {
+    "encryption_enabled": true,
+    "encryption_algorithm": "AES-256-GCM",
+    "session_timeout": 3600,
+    "max_login_attempts": 5
+  },
+  "ui": {
+    "theme": "dark",
+    "language": "fr",
+    "window_width": 1200,
+    "window_height": 800,
+    "window_min_width": 800,
+    "window_min_height": 600,
+    "font_family": "Segoe UI",
+    "font_size": 10
+  }
+}

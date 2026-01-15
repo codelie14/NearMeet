@@ -1,7 +1,7 @@
 # **Cahier des Charges – NearMeet**
 **Version :** 1.0
 **Date :** 15 janvier 2026
-**Rédigé par :** InformatiX AI
+**Rédigé par :** IndraLabs
 **Projet :** Application de communication locale multi-fonctions
 
 ---
